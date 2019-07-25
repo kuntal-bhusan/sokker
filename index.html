@@ -11,13 +11,14 @@ A two player (1v1) fun physics based soccer game. Player 1 (RED-left) controls t
 <!DOCTYPE html>
 <html>
 <head>
-  <title>SoKKer</title>
+  <title>soKKer</title>
   <meta charset="utf-8">
-  
-  <script src="https://cdn.jsdelivr.net/npm/matter-js@0.14.2/build/matter.min.js"></script>
+
+   
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.12.0/matter.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-<!--  
+<!-- 
   <script src="lib/matter.min.js"></script>
   <script src="lib/jquery.min.js"></script>
 --> 
@@ -63,36 +64,44 @@ $(document).keydown(function(e) {
 	    //Body.setPosition( car2.bodies[2], {x: 600, y: 300}); 
 	break;  
     
-        case 65: // a
-	    Body.setVelocity( car1.bodies[2], {x: -10, y: 0});   
+        case 65: // a // left
+	    Body.setVelocity( car1.bodies[1], {x: -5, y: 0});   
 	break;     
  
-        case 68: // d
-	    Body.setVelocity( car1.bodies[0], {x: 10, y: 0}); 
+        case 68: // d // right
+	    Body.setVelocity( car1.bodies[2], {x: 5, y: 0}); 
 	break;     
 	
-        case 87: // w
-	    Body.setVelocity( car1.bodies[2], {x: 0, y: -10});   
+        case 87: // w // up 
+	    Body.setVelocity( car1.bodies[0], {x: 0, y: -5});   
 	break;     
  
-        case 83: // s
-	    Body.setVelocity( car1.bodies[0], {x: 0, y: 10}); 
+        case 83: // s // down
+	    Body.setVelocity( car1.bodies[0], {x: 0, y: 5}); 
 	break; 	
     
         case 37: // left
-	    Body.setVelocity( car2.bodies[2], {x: -10, y: 0});   
+	    //Body.setVelocity( car2.bodies[0], {x: -5, y: 0}); 
+	    Body.setVelocity( car2.bodies[1], {x: -5, y: 0});  
+	    //Body.setVelocity( car2.bodies[2], {x: -5, y: 0}); 
 	break;              
 
         case 38: // up
-    	    Body.setVelocity( car2.bodies[2], {x: 0, y: -10});   	    
+    	    Body.setVelocity( car2.bodies[0], {x: 0, y: -5});
+    	    //Body.setVelocity( car2.bodies[2], {x: 0, y: -5});   
+    	    //Body.setVelocity( car2.bodies[1], {x: 0, y: -5});	    
         break;
 
         case 39: // right
-             Body.setVelocity( car2.bodies[0], {x: 10, y: 0});   
+             //Body.setVelocity( car2.bodies[0], {x: 5, y: 0}); 
+             Body.setVelocity( car2.bodies[2], {x: 5, y: 0});   
+             //Body.setVelocity( car2.bodies[1], {x: 5, y: 0}); 
         break;	
 
         case 40: // down      	
-    	    Body.setVelocity( car2.bodies[0], {x: 0, y: 10});   	       
+    	     Body.setVelocity( car2.bodies[0], {x: 0, y: 5});
+    	     //Body.setVelocity( car2.bodies[2], {x: 0, y: 5});  
+    	     //Body.setVelocity( car2.bodies[1], {x: 0, y: 5});  	       
         break;
 
         default: return; // exit this handler for other keys
@@ -148,15 +157,18 @@ car2.bodies[2].render.fillStyle = 'blue';
 
 ball.render.fillStyle = 'white';
 
-var boxA1 = Bodies.rectangle(100, 170, 80, 10,{ isStatic: true });
-var boxA2 = Bodies.rectangle(100, 230, 80, 10,{ isStatic: true });
-var boxB1 = Bodies.rectangle(700, 170, 80, 10,{ isStatic: true });
-var boxB2 = Bodies.rectangle(700, 230, 80, 10,{ isStatic: true });
+var boxA1 = Bodies.rectangle(120, 70, 10, 60,{ isStatic: true });
+var boxA2 = Bodies.rectangle(120, 330, 10, 60,{ isStatic: true });
+var boxB1 = Bodies.rectangle(680, 70, 10, 60,{ isStatic: true });
+var boxB2 = Bodies.rectangle(680, 330, 10, 60,{ isStatic: true });
 
 boxA1.render.fillStyle = 'red';
 boxA2.render.fillStyle = 'red';
 boxB1.render.fillStyle = 'blue';
 boxB2.render.fillStyle = 'blue';
+
+leftWall.render.fillStyle = 'red';
+rightWall.render.fillStyle = 'blue';
 
 World.add(engine.world, [car1,car2,topWall, leftWall, rightWall, bottomWall, ball,boxA1,boxA2,boxB1,boxB2]);
 
@@ -185,18 +197,20 @@ Render.run(render);
 			    //console.log(time_left);
 			    document.getElementById("time_val").innerHTML = "Time left = " + time_left;
 			    
-			    if(ball.position.x < 90 && ball.position.y > 170 && ball.position.y < 230){
+			    if(ball.position.x <= 120){
 			    	console.log('LEFT GOAL');
 			    	right_score += 1;
 			    	document.getElementById("right_val").innerHTML = '<font color="blue">' + "Right score = " + right_score + '</font>';
+			    	
 			    	Body.setPosition( ball, {x: 400, y: 200});
 			    	Body.setVelocity( ball, {x: 0, y: 0}); 
 			    }
 			    
-			    if(ball.position.x > 690 && ball.position.y > 170 && ball.position.y < 230){
+			    if(ball.position.x >= 680){
 			    	console.log('RIGHT GOAL');
 			    	left_score += 1;
 			    	document.getElementById("left_val").innerHTML = '<font color="red">' + "Left score = " + left_score + '</font>';
+			    	
 			    	Body.setPosition( ball, {x: 400, y: 200});
 			    	Body.setVelocity( ball, {x: 0, y: 0}); 
 			    }
