@@ -43,7 +43,7 @@ A two player (1v1) fun physics based soccer game. Player 1 (RED-left) controls t
 
 
   
-<div id="gameContainer" style="height: 10px; width: 100%;"></div>
+<div id="gameContainer" style="height: 30px; width: 100%;"></div>
 
 <b id="left_val" style="text-align:center;padding: 0 10em 1em 0;"><font color="red">Left Score = 0</font></b>
 <b id="time_val" style="text-align:center;padding: 0 10em 1em 0;">Time left = 300</b>
@@ -135,8 +135,8 @@ var bottomWall = Bodies.rectangle(400, 350, 720, 20, { isStatic: true });
 var ball = Bodies.circle(400, 200, 20, { restitution: 0.6 });
 
 
-var car1 = Composites.car(200, 300, 10, 20, 20);   
-var car2 = Composites.car(600, 300, 10, 20, 20);  
+var car1 = Composites.car(200, 300, 100, 20, 20);   
+var car2 = Composites.car(600, 300, 100, 20, 20);  
 
 car1.bodies[0].render.fillStyle = 'yellow';
 car1.bodies[1].render.fillStyle = 'red';
