@@ -1,0 +1,217 @@
+<!--
+sokker
+
+Author : Kuntal Bhusan
+Email : kuntal.bhusan@gmail.com
+
+A two player (1v1) fun physics based soccer game. Player 1 (RED-left) controls the paddle using keyboard buttons W,S,A,D and Player 2 uses the Left,Right,Up and Down keyboard keys. The aim is to manoeuvre the ball and score a goal in the opposite court within the given time. Refresh the page to start a new game.
+
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Matter</title>
+  <meta charset="utf-8">
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.12.0/matter.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!--  
+  <script src="lib/matter.min.js"></script>
+  <script src="lib/jquery.min.js"></script>
+--> 
+
+  <style>
+  
+	body {
+	  text-align: center;
+	  margin: 10px;
+	}
+
+	canvas {
+	  margin: 20px auto;
+	}
+
+
+  
+  </style>
+  
+</head>
+
+<body>
+
+
+  
+<div id="gameContainer" style="height: 10px; width: 100%;"></div>
+
+<b id="left_val" style="text-align:center;padding: 0 10em 1em 0;"><font color="red">Left Score = 0</font></b>
+<b id="time_val" style="text-align:center;padding: 0 10em 1em 0;">Time left = 300</b>
+<b id="right_val" style="text-align:center;padding: 0 2em 1em 0;"><font color="blue">Right Score = 0</font></b>
+
+
+
+  <script>
+
+$(document).keydown(function(e) {
+    switch(e.which) {
+    
+        case 32: // space
+	    Body.setPosition( ball, {x: 400, y: 200}); 
+	    Body.setVelocity( ball, {x: 0, y: 0}); 
+	    //Body.setPosition( car1.bodies[2], {x: 200, y: 300});
+	    //Body.setPosition( car2.bodies[2], {x: 600, y: 300}); 
+	break;  
+    
+        case 65: // a
+	    Body.setVelocity( car1.bodies[2], {x: -10, y: 0});   
+	break;     
+ 
+        case 68: // d
+	    Body.setVelocity( car1.bodies[0], {x: 10, y: 0}); 
+	break;     
+	
+        case 87: // w
+	    Body.setVelocity( car1.bodies[2], {x: 0, y: -10});   
+	break;     
+ 
+        case 83: // s
+	    Body.setVelocity( car1.bodies[0], {x: 0, y: 10}); 
+	break; 	
+    
+        case 37: // left
+	    Body.setVelocity( car2.bodies[2], {x: -10, y: 0});   
+	break;              
+
+        case 38: // up
+    	    Body.setVelocity( car2.bodies[2], {x: 0, y: -10});   	    
+        break;
+
+        case 39: // right
+             Body.setVelocity( car2.bodies[0], {x: 10, y: 0});   
+        break;	
+
+        case 40: // down      	
+    	    Body.setVelocity( car2.bodies[0], {x: 0, y: 10});   	       
+        break;
+
+        default: return; // exit this handler for other keys
+    }
+    e.preventDefault(); // prevent the default action (scroll / move caret)
+});
+
+
+var Engine = Matter.Engine,
+  Runner = Matter.Runner,
+  Render = Matter.Render,
+  Composites = Matter.Composites,
+  Events = Matter.Events,
+  World = Matter.World,
+  Bodies = Matter.Bodies,
+  Body = Matter.Body;
+  
+var left_score = 0;
+var right_score = 0;
+ 
+
+var engine = Engine.create();
+engine.world.gravity.y = 0;
+
+var render = Render.create({
+  element: document.body,
+  engine: engine,
+  options: {
+    width: 800,
+    height: 400,
+    wireframes: false
+  }
+});
+
+var topWall = Bodies.rectangle(400, 50, 720, 20, { isStatic: true });
+var leftWall = Bodies.rectangle(50, 210, 20, 300, { isStatic: true });
+var rightWall = Bodies.rectangle(750, 210, 20, 300, { isStatic: true });
+var bottomWall = Bodies.rectangle(400, 350, 720, 20, { isStatic: true });
+
+var ball = Bodies.circle(400, 200, 20, { restitution: 0.6 });
+
+
+var car1 = Composites.car(200, 300, 100, 20, 20);   
+var car2 = Composites.car(600, 300, 100, 20, 20);  
+
+car1.bodies[0].render.fillStyle = 'yellow';
+car1.bodies[1].render.fillStyle = 'red';
+car1.bodies[2].render.fillStyle = 'red';
+
+car2.bodies[0].render.fillStyle = 'green';
+car2.bodies[1].render.fillStyle = 'blue';
+car2.bodies[2].render.fillStyle = 'blue';
+
+ball.render.fillStyle = 'white';
+
+var boxA1 = Bodies.rectangle(100, 170, 80, 10,{ isStatic: true });
+var boxA2 = Bodies.rectangle(100, 230, 80, 10,{ isStatic: true });
+var boxB1 = Bodies.rectangle(700, 170, 80, 10,{ isStatic: true });
+var boxB2 = Bodies.rectangle(700, 230, 80, 10,{ isStatic: true });
+
+boxA1.render.fillStyle = 'red';
+boxA2.render.fillStyle = 'red';
+boxB1.render.fillStyle = 'blue';
+boxB2.render.fillStyle = 'blue';
+
+World.add(engine.world, [car1,car2,topWall, leftWall, rightWall, bottomWall, ball,boxA1,boxA2,boxB1,boxB2]);
+
+
+Engine.run(engine);
+
+Render.run(render);
+
+
+
+// create runner
+    var runner = Runner.create();
+    Runner.run(runner, engine);
+
+    // an example of using beforeUpdate event on an engine
+    Events.on(engine, 'beforeUpdate', function(event) {
+        var engine = event.source;
+
+        // apply random forces every 5 secs
+        if (event.timestamp % 1000 < 50){
+            var time =  parseInt(event.timestamp / 1000);
+            var time_left = 300 - time;
+            
+            if(time_left > 0) 
+            {
+			    //console.log(time_left);
+			    document.getElementById("time_val").innerHTML = "Time left = " + time_left;
+			    
+			    if(ball.position.x < 90 && ball.position.y > 170 && ball.position.y < 230){
+			    	console.log('LEFT GOAL');
+			    	right_score += 1;
+			    	document.getElementById("right_val").innerHTML = '<font color="blue">' + "Right score = " + right_score + '</font>';
+			    	Body.setPosition( ball, {x: 400, y: 200});
+			    	Body.setVelocity( ball, {x: 0, y: 0}); 
+			    }
+			    
+			    if(ball.position.x > 690 && ball.position.y > 170 && ball.position.y < 230){
+			    	console.log('RIGHT GOAL');
+			    	left_score += 1;
+			    	document.getElementById("left_val").innerHTML = '<font color="red">' + "Left score = " + left_score + '</font>';
+			    	Body.setPosition( ball, {x: 400, y: 200});
+			    	Body.setVelocity( ball, {x: 0, y: 0}); 
+			    }
+	    }
+	    else
+	    {
+	    			document.getElementById("time_val").innerHTML = "GAME OVER !!!";
+	    }	    
+        }
+    });
+
+
+
+  
+  </script>
+
+</body>
+</html>
