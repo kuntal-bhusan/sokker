@@ -14,10 +14,14 @@ A two player (1v1) fun physics based soccer game. Player 1 (RED-left) controls t
   <title>soKKer</title>
   <meta charset="utf-8">
 
-  
+
   <script src="https://cdn.jsdelivr.net/npm/matter-js@0.14.2/build/matter.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
+<!--    
+  <script src="lib/matter.min.js"></script>
+  <script src="lib/jquery.min.js"></script>
+--> 
 
   <style>
   
@@ -85,19 +89,24 @@ $(document).keydown(function(e) {
  
     
         case 37: // left 
+            //Body.applyForce( car2, {x: car2.position.x, y: car2.position.y}, {x: -0.005, y: 0}); 
 	    Body.setVelocity( car2, {x: -3, y: 0});
 	break;  
+ 
 	
         case 39: // right  
+             //Body.applyForce( car2, {x: car2.position.x, y: car2.position.y}, {x: 0.005, y: 0});
              Body.setVelocity( car2, {x: 3, y: 0});
         break;		            
 
         case 38: // up
+             //Body.applyForce( car2, {x: car2.position.x, y: car2.position.y}, {x: 0, y: -0.005}); 
              Body.setVelocity( car2, {x: 0, y: -3});  
   
         break;
 
         case 40: // down      		
+    	     //Body.applyForce( car2, {x: car2.position.x, y: car2.position.y}, {x: 0, y: -0.005});
     	     Body.setVelocity( car2, {x: 0, y: 3});       
         break;
 
@@ -148,8 +157,8 @@ var ball = Bodies.circle(400, 200, 10, { restitution: 0.8 });
 //var car1 = Composites.car(200, 300, 50, 10, 10);   
 //var car2 = Composites.car(600, 300, 50, 10, 10);  
 
-var car1 = Bodies.circle(200, 300, 20);   
-var car2 = Bodies.circle(600, 300, 20); 
+var car1 = Bodies.circle(200, 150, 20);   
+var car2 = Bodies.circle(600, 150, 20); 
 
 car1.render.fillStyle = 'red';
 car2.render.fillStyle = 'blue';
@@ -170,10 +179,20 @@ var boxA2 = Bodies.rectangle(120, 330, 10, 60,{ isStatic: true });
 var boxB1 = Bodies.rectangle(680, 70, 10, 60,{ isStatic: true });
 var boxB2 = Bodies.rectangle(680, 330, 10, 60,{ isStatic: true });
 
+var boxC1 = Bodies.rectangle(135, 70, 10, 60,{ isStatic: true }); Body.rotate(boxC1, Math.PI/6);
+var boxC2 = Bodies.rectangle(135, 330, 10, 60,{ isStatic: true });Body.rotate(boxC2, -Math.PI/6);
+var boxD1 = Bodies.rectangle(665, 70, 10, 60,{ isStatic: true }); Body.rotate(boxD1, -Math.PI/6);
+var boxD2 = Bodies.rectangle(665, 330, 10, 60,{ isStatic: true }); Body.rotate(boxD2, Math.PI/6);
+
 boxA1.render.fillStyle = 'red';
 boxA2.render.fillStyle = 'red';
 boxB1.render.fillStyle = 'blue';
 boxB2.render.fillStyle = 'blue';
+
+boxC1.render.fillStyle = 'red';
+boxC2.render.fillStyle = 'red';
+boxD1.render.fillStyle = 'blue';
+boxD2.render.fillStyle = 'blue';
 
 leftWall.render.fillStyle = 'red';
 rightWall.render.fillStyle = 'blue';
@@ -191,7 +210,11 @@ World.add(engine.world, [
 	boxA1,
 	boxA2,
 	boxB1,
-	boxB2
+	boxB2,
+	boxC1,
+	boxC2,
+	boxD1,
+	boxD2
 ]);
 
 
@@ -222,9 +245,15 @@ Render.run(render);
 			    	console.log('LEFT GOAL');
 			    	right_score += 1;
 			    	document.getElementById("right_val").innerHTML = '<font color="blue">' + "Right score = " + right_score + '</font>';
+			    	engine.timing.timeScale = 0.5;
 			    	
 			    	Body.setPosition( ball, {x: 400, y: 200});
 			    	Body.setVelocity( ball, {x: 0, y: 0}); 
+			    	
+			        Body.setPosition( car1, {x: 200, y: 150});
+	    			Body.setPosition( car2, {x: 600, y: 150}); 
+	    			Body.setVelocity( car1, {x: 0, y: 0});
+	    			Body.setVelocity( car2, {x: 0, y: 0});
 			    }
 			    
 			    if(ball.position.x >= 680){
@@ -234,6 +263,11 @@ Render.run(render);
 			    	
 			    	Body.setPosition( ball, {x: 400, y: 200});
 			    	Body.setVelocity( ball, {x: 0, y: 0}); 
+			    	
+			    	Body.setPosition( car1, {x: 200, y: 150});
+	    			Body.setPosition( car2, {x: 600, y: 150}); 
+	    			Body.setVelocity( car1, {x: 0, y: 0});
+	    			Body.setVelocity( car2, {x: 0, y: 0});
 			    }
 			    
 			    
