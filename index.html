@@ -14,14 +14,14 @@ A two player (1v1) fun physics based soccer game. Player 1 (RED-left) controls t
   <title>soKKer</title>
   <meta charset="utf-8">
 
-   
+<!--    
   <script src="https://cdn.jsdelivr.net/npm/matter-js@0.14.2/build/matter.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+--> 
 
-<!-- 
   <script src="lib/matter.min.js"></script>
   <script src="lib/jquery.min.js"></script>
---> 
+
 
   <style>
   
@@ -35,10 +35,74 @@ A two player (1v1) fun physics based soccer game. Player 1 (RED-left) controls t
 	}
 
 
+
+
+
+	.container {
+	    position: relative;
+	    line-height: 0;
+	}
+
+	.score {
+	    position: absolute;
+	    top: 10px;
+	    line-height: 1;
+	}
+
+	.score span {
+	    font-size: 3.25rem;
+	}
+
+	.current-score {
+	    left: 10px;
+	}
+
+	.high-score {
+	    text-align: right;
+	    right: 10px;
+	}
+
+	.trigger {
+	  appearance: none;
+	    position: absolute;
+	    width: 80px;
+	    height: 80px;
+	    bottom: 10px;
+	  border: 0;
+	    border-radius: 50%;
+	  color: inherit;
+	    background-color: #e64980;
+	    text-align: center;
+	    line-height: 80px;
+	    font-size: 1.25rem;
+	  text-transform: inherit;
+	    cursor: pointer;
+	    user-select: none;
+	  outline: none;
+	}
+
+	.left-trigger {
+	    left: 10px;
+	}
+
+	.right-trigger {
+	    right: 60px;
+	}
+
+	canvas {
+	    overflow: hidden;
+	    border-radius: 5px;
+	    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.75);
+	}
+
+
   
   </style>
   
 </head>
+
+
+
 
 <body>
 
@@ -50,9 +114,12 @@ A two player (1v1) fun physics based soccer game. Player 1 (RED-left) controls t
 <b id="time_val" style="text-align:center;padding: 0 10em 1em 0;">Time left = 300</b>
 <b id="right_val" style="text-align:center;padding: 0 2em 1em 0;"><font color="blue">Right Score = 0</font></b>
 
-
+  </div>
+  <button class="trigger left-trigger">tap!</button>
+  <button class="trigger right-trigger">tap!</button>
 
   <script>
+  
 
 $(document).keydown(function(e) {
     switch(e.which) {
@@ -65,44 +132,43 @@ $(document).keydown(function(e) {
 	break;  
     
         case 65: // a // left
-	    Body.setVelocity( car1.bodies[1], {x: -5, y: 0});   
+	    Body.setVelocity( car1, {x: -5, y: 0});   
 	break;     
  
         case 68: // d // right
-	    Body.setVelocity( car1.bodies[2], {x: 5, y: 0}); 
+	    Body.setVelocity( car1, {x: 5, y: 0}); 
 	break;     
 	
         case 87: // w // up 
-	    Body.setVelocity( car1.bodies[0], {x: 0, y: -5});   
+	    Body.setVelocity( car1, {x: 0, y: -5});   
 	break;     
  
         case 83: // s // down
-	    Body.setVelocity( car1.bodies[0], {x: 0, y: 5}); 
+	    Body.setVelocity( car1, {x: 0, y: 5}); 
 	break; 	
+ 
+ 
+ 
+ 
+ 
     
-        case 37: // left
-	    //Body.setVelocity( car2.bodies[0], {x: -5, y: 0}); 
-	    Body.setVelocity( car2.bodies[1], {x: -5, y: 0});  
-	    //Body.setVelocity( car2.bodies[2], {x: -5, y: 0}); 
-	break;              
+        case 37: // left 
+	    Body.setVelocity( car2, {x: -3, y: 0});
+	break;  
+	
+        case 39: // right  
+             Body.setVelocity( car2, {x: 3, y: 0});
+        break;		            
 
         case 38: // up
-    	    Body.setVelocity( car2.bodies[0], {x: 0, y: -5});
-    	    //Body.setVelocity( car2.bodies[2], {x: 0, y: -5});   
-    	    //Body.setVelocity( car2.bodies[1], {x: 0, y: -5});	    
+             Body.setVelocity( car2, {x: 0, y: -3});  
+  
         break;
 
-        case 39: // right
-             //Body.setVelocity( car2.bodies[0], {x: 5, y: 0}); 
-             Body.setVelocity( car2.bodies[2], {x: 5, y: 0});   
-             //Body.setVelocity( car2.bodies[1], {x: 5, y: 0}); 
-        break;	
-
-        case 40: // down      	
-    	     Body.setVelocity( car2.bodies[0], {x: 0, y: 5});
-    	     //Body.setVelocity( car2.bodies[2], {x: 0, y: 5});  
-    	     //Body.setVelocity( car2.bodies[1], {x: 0, y: 5});  	       
+        case 40: // down      		
+    	     Body.setVelocity( car2, {x: 0, y: 3});       
         break;
+
 
         default: return; // exit this handler for other keys
     }
@@ -114,9 +180,12 @@ var Engine = Matter.Engine,
   Runner = Matter.Runner,
   Render = Matter.Render,
   Composites = Matter.Composites,
+  Constraint = Matter.Constraint,
+  MouseConstraint = Matter.MouseConstraint, 
   Events = Matter.Events,
   World = Matter.World,
   Bodies = Matter.Bodies,
+  Vector = Matter.Vector,
   Body = Matter.Body;
   
 var left_score = 0;
@@ -144,16 +213,23 @@ var bottomWall = Bodies.rectangle(400, 350, 720, 20, { isStatic: true });
 var ball = Bodies.circle(400, 200, 10, { restitution: 0.8 });
 
 
-var car1 = Composites.car(200, 300, 50, 10, 10);   
-var car2 = Composites.car(600, 300, 50, 10, 10);  
+//var car1 = Composites.car(200, 300, 50, 10, 10);   
+//var car2 = Composites.car(600, 300, 50, 10, 10);  
 
-car1.bodies[0].render.fillStyle = 'yellow';
-car1.bodies[1].render.fillStyle = 'red';
-car1.bodies[2].render.fillStyle = 'red';
+var car1 = Bodies.circle(200, 300, 20);   
+var car2 = Bodies.circle(600, 300, 20); 
 
-car2.bodies[0].render.fillStyle = 'green';
-car2.bodies[1].render.fillStyle = 'blue';
-car2.bodies[2].render.fillStyle = 'blue';
+car1.render.fillStyle = 'red';
+car2.render.fillStyle = 'blue';
+
+
+//car1.bodies[0].render.fillStyle = 'yellow';
+//car1.bodies[1].render.fillStyle = 'red';
+//car1.bodies[2].render.fillStyle = 'red';
+
+//car2.bodies[0].render.fillStyle = 'green';
+//car2.bodies[1].render.fillStyle = 'blue';
+//car2.bodies[2].render.fillStyle = 'blue';
 
 ball.render.fillStyle = 'white';
 
@@ -170,13 +246,26 @@ boxB2.render.fillStyle = 'blue';
 leftWall.render.fillStyle = 'red';
 rightWall.render.fillStyle = 'blue';
 
-World.add(engine.world, [car1,car2,topWall, leftWall, rightWall, bottomWall, ball,boxA1,boxA2,boxB1,boxB2]);
+
+
+World.add(engine.world, [
+	car1,
+	car2,
+	topWall, 
+	leftWall, 
+	rightWall, 
+	bottomWall, 
+	ball,
+	boxA1,
+	boxA2,
+	boxB1,
+	boxB2
+]);
 
 
 Engine.run(engine);
 
 Render.run(render);
-
 
 
 // create runner
@@ -214,6 +303,11 @@ Render.run(render);
 			    	Body.setPosition( ball, {x: 400, y: 200});
 			    	Body.setVelocity( ball, {x: 0, y: 0}); 
 			    }
+			    
+			    
+			    
+			    move_ai(car1);
+			    		    
 	    }
 	    else
 	    {
@@ -221,6 +315,137 @@ Render.run(render);
 	    }	    
         }
     });
+
+
+
+
+
+
+
+
+    function move_ai(car1) {
+    
+    	var car_x = car1.position.x;
+    	var car_y = car1.position.y;
+    	
+    	var ball_x = ball.position.x;
+    	var ball_y = ball.position.y;
+    	
+    	var dx = Math.abs(ball_x - car_x);
+    	var dy = Math.abs(ball_y - car_y);
+    	
+    	var fx = dx/100;
+    	var fy = dy/100;
+    	
+    	
+        
+        if (ball_x > car_x && ball_y >= car_y) {
+        
+        //console.log('CAR LEFT UP');
+        //console.log(car_x + ',' + car_y + ',' + ball_x + ',' + ball_y);
+        //console.log(dx + ',' + dy + ',' + fx + ',' + fy);
+        
+	   if(dx >= dy)	        
+           { 
+           Body.setVelocity( car1, {x: 3, y: 1}); 
+           }
+           else
+           { 
+           Body.setVelocity( car1, {x: 1, y: 3}); 
+           }
+        }
+        
+        if (ball_x > car_x && ball_y <= car_y) {
+        
+        //console.log('CAR LEFT DOWN');
+        //console.log(car_x + ',' + car_y + ',' + ball_x + ',' + ball_y);
+        //console.log(dx + ',' + dy + ',' + fx + ',' + fy);
+        	
+	   if(dx >= dy)	        
+           { 
+           Body.setVelocity( car1, {x: 3, y: -1}); 
+           }
+           else
+           { 
+           Body.setVelocity( car1, {x: 1, y: -3}); 
+           }
+        }
+                
+        if (ball_x < car_x && ball_y >= car_y) {
+        
+        //console.log('CAR RIGHT UP');
+        //console.log(car_x + ',' + car_y + ',' + ball_x + ',' + ball_y);
+        //console.log(dx + ',' + dy + ',' + fx + ',' + fy);
+
+	   if(dx >= dy)	        
+           {
+		   if(dx > 100)
+		   { 
+		   	Body.setVelocity( car1, {x: -3, y: 1}); 
+		   }
+		   else
+		   {
+		   	Body.setVelocity( car1, {x: 0, y: 3}); 
+		   	Body.setVelocity( car1, {x: -2, y: 0});
+		   }
+           }
+           else
+           {
+		   if(dx > 100)
+		   {             
+           	   	Body.setVelocity( car1, {x: -1, y: 3}); 
+           	   }
+           	   else
+           	   {
+           	   	Body.setVelocity( car1, {x: 0, y: 3}); 
+           	   	Body.setVelocity( car1, {x: -2, y: 0});            	   
+           	   }
+           }
+        }
+
+        if (ball_x < car_x && ball_y <= car_y) {
+        
+        //console.log('CAR RIGHT DOWN');
+        //console.log(car_x + ',' + car_y + ',' + ball_x + ',' + ball_y);
+        //console.log(dx + ',' + dy + ',' + fx + ',' + fy);
+
+	   if(dx >= dy)	        
+           { 
+		   if(dx > 100)
+		   { 
+		   	Body.setVelocity( car1, {x: -3, y: -1}); 
+		   }
+		   else
+		   {
+		   	Body.setVelocity( car1, {x: 0, y: -3}); 
+		   	Body.setVelocity( car1, {x: -2, y: 0}); 
+		   }           
+           }
+           else
+           {
+		   if(dx > 100)
+		   { 
+		   	Body.setVelocity( car1, {x: -1, y: -3}); 
+		   }
+		   else
+		   {
+		   	Body.setVelocity( car1, {x: 0, y: -3}); 
+		   	Body.setVelocity( car1, {x: -2, y: 0}); 
+		   }                
+
+           }
+        }             
+                
+
+    }
+
+
+
+
+
+
+
+
 
 
 
