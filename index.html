@@ -34,47 +34,11 @@ A two player (1v1) fun physics based soccer game. Player 1 (RED-left) controls t
 	  margin: 20px auto;
 	}
 
-	.trigger {
-	  appearance: none;
-	    position: absolute;
-	    width: 80px;
-	    height: 80px;
-	    bottom: 10px;
-	  border: 0;
-	    border-radius: 50%;
-	  color: inherit;
-	    background-color: #e64980;
-	    text-align: center;
-	    line-height: 80px;
-	    font-size: 1.25rem;
-	  text-transform: inherit;
-	    cursor: pointer;
-	    user-select: none;
-	  outline: none;
-	}
-
-	.left-trigger {
-	    left: 10px;
-	}
-
-	.right-trigger {
-	    right: 60px;
-	}
-
-	canvas {
-	    overflow: hidden;
-	    border-radius: 5px;
-	    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.75);
-	}
-
 
   
   </style>
   
 </head>
-
-
-
 
 <body>
 
@@ -86,12 +50,12 @@ A two player (1v1) fun physics based soccer game. Player 1 (RED-left) controls t
 <b id="time_val" style="text-align:center;padding: 0 10em 1em 0;">Time left = 300</b>
 <b id="right_val" style="text-align:center;padding: 0 2em 1em 0;"><font color="blue">Right Score = 0</font></b>
 
-  </div>
-  <button class="trigger left-trigger">tap!</button>
-  <button class="trigger right-trigger">tap!</button>
+
 
   <script>
   
+  
+
 
 $(document).keydown(function(e) {
     switch(e.which) {
