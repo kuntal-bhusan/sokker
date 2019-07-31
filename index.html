@@ -14,9 +14,14 @@ A two player (1v1) fun physics based soccer game. Player 1 (RED-left) controls t
   <title>soKKer</title>
   <meta charset="utf-8">
 
- 
+<!--    
   <script src="https://cdn.jsdelivr.net/npm/matter-js@0.14.2/build/matter.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+--> 
+
+  <script src="lib/matter.min.js"></script>
+  <script src="lib/jquery.min.js"></script>
+
 
   <style>
   
@@ -41,46 +46,6 @@ A two player (1v1) fun physics based soccer game. Player 1 (RED-left) controls t
   
 <div id="gameContainer" style="height: 10px; width: 100%;"></div>
 
-
-         <div id="do-info" class="hidden">
-            <p>
-               Coordinates:
-               (<span id="beta" class="value">null</span>,
-               <span id="gamma" class="value">null</span>,
-               <span id="alpha" class="value">null</span>)
-               <br />
-               Position absolute? <span id="is-absolute" class="value">unavailable</span>
-            </p>
-         </div>
-         <div id="dm-info" class="hidden">
-            <p>
-               Acceleration:
-               (<span id="acceleration-x" class="value">null</span>,
-               <span id="acceleration-y" class="value">null</span>,
-               <span id="acceleration-z" class="value">null</span>)
-               m/s<sup>2</sup>
-            </p>
-            <p>
-               Acceleration including gravity:
-               (<span id="acceleration-including-gravity-x" class="value">null</span>,
-               <span id="acceleration-including-gravity-y" class="value">null</span>,
-               <span id="acceleration-including-gravity-z" class="value">null</span>)
-               m/s<sup>2</sup>
-            </p>
-            <p>
-               Rotation rate:
-               (<span id="rotation-rate-beta" class="value">null</span>,
-               <span id="rotation-rate-gamma" class="value">null</span>,
-               <span id="rotation-rate-alpha" class="value">null</span>)
-            </p>
-            <p>
-               Interval: <span id="interval" class="value">0</span> milliseconds
-            </p>
-         </div>
-      </div>
- 
-
-
 <b id="left_val" style="text-align:center;padding: 0 10em 1em 0;"><font color="red">Left Score = 0</font></b>
 <b id="time_val" style="text-align:center;padding: 0 10em 1em 0;">Time left = 300</b>
 <b id="right_val" style="text-align:center;padding: 0 2em 1em 0;"><font color="blue">Right Score = 0</font></b>
@@ -88,42 +53,6 @@ A two player (1v1) fun physics based soccer game. Player 1 (RED-left) controls t
 
 
   <script>
-
-
-
-
-         if (!window.DeviceMotionEvent) {
-            document.getElementById('dm-unsupported').classList.remove('hidden');
-         } else {
-            document.getElementById('dm-info').classList.remove('hidden');
- 
-            window.addEventListener('devicemotion', function(event) {
-               document.getElementById('acceleration-x').innerHTML = Math.round(event.acceleration.x);
-               document.getElementById('acceleration-y').innerHTML = Math.round(event.acceleration.y);
-               document.getElementById('acceleration-z').innerHTML = Math.round(event.acceleration.z);
- 
-               document.getElementById('acceleration-including-gravity-x').innerHTML =
-                       Math.round(event.accelerationIncludingGravity.x);
-               document.getElementById('acceleration-including-gravity-y').innerHTML =
-                       Math.round(event.accelerationIncludingGravity.y);
-               document.getElementById('acceleration-including-gravity-z').innerHTML =
-                       Math.round(event.accelerationIncludingGravity.z);
- 
-               document.getElementById('rotation-rate-beta').innerHTML = Math.round(event.rotationRate.beta);
-               document.getElementById('rotation-rate-gamma').innerHTML = Math.round(event.rotationRate.gamma);
-               document.getElementById('rotation-rate-alpha').innerHTML = Math.round(event.rotationRate.alpha);
- 
-               document.getElementById('interval').innerHTML = event.interval;
-            });
-         }
- 
-
-
-
-
-
-
-
   
   
 
