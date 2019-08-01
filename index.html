@@ -14,9 +14,10 @@ A two player (1v1) fun physics based soccer game. Player 1 (RED-left) controls t
   <title>soKKer</title>
   <meta charset="utf-8">
 
- 
+   
   <script src="https://cdn.jsdelivr.net/npm/matter-js@0.14.2/build/matter.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 
 
   <style>
@@ -123,6 +124,8 @@ var Engine = Matter.Engine,
   World = Matter.World,
   Bodies = Matter.Bodies,
   Vector = Matter.Vector,
+  MouseConstraint = Matter.MouseConstraint,
+  Mouse = Matter.Mouse,
   Body = Matter.Body;
   
 var left_score = 0;
@@ -142,9 +145,12 @@ var render = Render.create({
   }
 });
 
+
+
+
 var topWall = Bodies.rectangle(400, 50, 720, 20, { isStatic: true });
-var leftWall = Bodies.rectangle(50, 210, 20, 300, { isStatic: true });
-var rightWall = Bodies.rectangle(750, 210, 20, 300, { isStatic: true });
+var leftWall = Bodies.rectangle(50, 210, 20, 300, { isStatic: true});
+var rightWall = Bodies.rectangle(750, 210, 20, 300, { isStatic: true});
 var bottomWall = Bodies.rectangle(400, 350, 720, 20, { isStatic: true });
 
 var ball = Bodies.circle(400, 200, 10, { restitution: 0.8 });
@@ -153,8 +159,8 @@ var ball = Bodies.circle(400, 200, 10, { restitution: 0.8 });
 //var car1 = Composites.car(200, 300, 50, 10, 10);   
 //var car2 = Composites.car(600, 300, 50, 10, 10);  
 
-var car1 = Bodies.circle(200, 150, 20);   
-var car2 = Bodies.circle(600, 150, 20); 
+var car1 = Bodies.circle(200, 150, 20, { frictionAir: 0.01 });   
+var car2 = Bodies.circle(600, 150, 20, { frictionAir: 0.03 }); 
 
 car1.render.fillStyle = 'red';
 car2.render.fillStyle = 'blue';
@@ -194,7 +200,6 @@ leftWall.render.fillStyle = 'red';
 rightWall.render.fillStyle = 'blue';
 
 
-
 World.add(engine.world, [
 	car1,
 	car2,
@@ -214,21 +219,36 @@ World.add(engine.world, [
 ]);
 
 
+var mouse = Mouse.create(render.canvas),
+        mouseConstraint = MouseConstraint.create(engine, {
+            mouse: mouse,
+            constraint: {
+                stiffness: 0.2,
+                render: {
+                    visible: false
+                }
+            }
+});
+
+//World.add(engine.world, mouseConstraint);
+
+
+
+
 Engine.run(engine);
 
 Render.run(render);
 
 
-// create runner
     var runner = Runner.create();
     Runner.run(runner, engine);
 
-    // an example of using beforeUpdate event on an engine
+
     Events.on(engine, 'beforeUpdate', function(event) {
         var engine = event.source;
 
-        // apply random forces every 5 secs
-        if (event.timestamp % 1000 < 50){
+
+        //if (event.timestamp % 1000 < 50){
             var time =  parseInt(event.timestamp / 1000);
             var time_left = 300 - time;
             
@@ -236,7 +256,7 @@ Render.run(render);
             {
 			    //console.log(time_left);
 			    document.getElementById("time_val").innerHTML = "Time left = " + time_left;
-			    
+			    			    			    
 			    if(ball.position.x <= 120){
 			    	console.log('LEFT GOAL');
 			    	right_score += 1;
@@ -275,7 +295,7 @@ Render.run(render);
 	    {
 	    			document.getElementById("time_val").innerHTML = "GAME OVER !!!";
 	    }	    
-        }
+        //}
     });
 
 
@@ -341,7 +361,7 @@ Render.run(render);
 
 	   if(dx >= dy)	        
            {
-		   if(dx > 100)
+		   if(dx > 300)
 		   { 
 		   	Body.setVelocity( car1, {x: -3, y: 1}); 
 		   }
@@ -353,7 +373,7 @@ Render.run(render);
            }
            else
            {
-		   if(dx > 100)
+		   if(dx > 300)
 		   {             
            	   	Body.setVelocity( car1, {x: -1, y: 3}); 
            	   }
@@ -373,7 +393,7 @@ Render.run(render);
 
 	   if(dx >= dy)	        
            { 
-		   if(dx > 100)
+		   if(dx > 300)
 		   { 
 		   	Body.setVelocity( car1, {x: -3, y: -1}); 
 		   }
@@ -385,7 +405,7 @@ Render.run(render);
            }
            else
            {
-		   if(dx > 100)
+		   if(dx > 300)
 		   { 
 		   	Body.setVelocity( car1, {x: -1, y: -3}); 
 		   }
