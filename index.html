@@ -101,6 +101,8 @@ A two player (1v1) fun physics based soccer game. Player 1 (RED-left) controls t
 					+ (joystick.up()	? ' up'		: '')
 					+ (joystick.left()	? ' left'	: '')
 					+ (joystick.down()	? ' down' 	: '')	
+
+
 			}, 1/30 * 1000);
 		</script>
 
@@ -273,7 +275,7 @@ var prev_y = 0;
 
 
 	function move_player() {
-		
+
 
 		
 		if (downPressed == true) {
@@ -308,6 +310,29 @@ var prev_y = 0;
 		if (downPressed==true && rightPressed==true) {
 			Body.setVelocity( car2, {x: 2.5, y: 2.5}); 			
 		}
+
+
+
+
+
+
+		if (joystick.down()) {
+			Body.setVelocity( car2, {x: 0, y: 2.5});  
+		}
+		if (joystick.up()) {
+			Body.setVelocity( car2, {x: 0, y: -2.5});  
+		}		
+		
+		if (joystick.left()) {
+			Body.setVelocity( car2, {x: -2.5, y: 0});
+		}
+		if (joystick.right()) {
+			Body.setVelocity( car2, {x: 2.5, y: 0});
+		}
+		
+
+
+
      
 
 		requestAnimationFrame(move_player);
