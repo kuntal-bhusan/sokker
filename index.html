@@ -141,7 +141,7 @@ var render = Render.create({
   }
 });
 
-
+render.options.background = 'transparent';
 
 
 var topWall = Bodies.rectangle(400, 50, 720, 20, { isStatic: true });
@@ -161,7 +161,7 @@ car2.render.fillStyle = 'blue';
 
 
 
-ball.render.fillStyle = 'white';
+ball.render.fillStyle = 'black';
 
 var boxA1 = Bodies.rectangle(120, 90, 10, 60,{ isStatic: true }); //Body.rotate(boxA1, -Math.PI/6);
 var boxA2 = Bodies.rectangle(120, 310, 10, 60,{ isStatic: true }); //Body.rotate(boxA2, Math.PI/6);
