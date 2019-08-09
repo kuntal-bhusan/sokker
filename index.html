@@ -13,40 +13,30 @@ A two player (1v1) fun physics based soccer game. Player 1 (RED-left) controls t
 <head>
 
   <style>
-  
-		body {
+ 
+
+        html, body {
 		  text-align: center;
 		  margin: 10px;
-		}
+        }
 
-		canvas {
-		  margin: 20px auto;
-		}
+        #left {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 50%;
+            background: rgba(0, 255, 0, 0.1);
+        }
 
-		#info {
-			position	: absolute;
-			top		: 0px;
-			width		: 100%;
-			padding		: 5px;
-			text-align	: center;
-		}
-		#info a {
-			color		: #66F;
-			text-decoration	: none;
-		}
-		#info a:hover {
-			text-decoration	: underline;
-		}
-		#container {
-			width		: 100%;
-			height		: 100%;
-			overflow	: hidden;
-			padding		: 0;
-			margin		: 0;
-			-webkit-user-select	: none;
-			-moz-user-select	: none;
-		}
-
+        #right {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            width: 50%;
+            background: rgba(0, 0, 255, 0.1);
+        }
 
   
   </style>
@@ -59,8 +49,6 @@ A two player (1v1) fun physics based soccer game. Player 1 (RED-left) controls t
    
   <script src="https://cdn.jsdelivr.net/npm/matter-js@0.14.2/build/matter.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  		<script src="virtualjoystick.js"></script>
-
 
 <!-- 
   <script src="lib/matter.min.js"></script>
@@ -71,31 +59,8 @@ A two player (1v1) fun physics based soccer game. Player 1 (RED-left) controls t
 
 <body>
 
-
-
-		<div id="info">
-			<span id="result"></span>
-		</div> 
-
-
-		<script>
-			console.log("touchscreen is", VirtualJoystick.touchScreenAvailable() ? "available" : "not available");
-	
-			var joystick	= new VirtualJoystick({
-				container	: document.getElementById('gameContainer'),
-				mouseSupport	: true,
-			});
-			joystick.addEventListener('touchStart', function(){
-				console.log('down')
-			})
-			joystick.addEventListener('touchEnd', function(){
-				console.log('up')
-			})
-
-		</script>
-
   
-<div id="gameContainer" style="height: 10px; width: 100%;"></div>
+<div id="gameContainer" style="height: 50px; width: 100%;"></div>
 
 <b id="left_val" style="text-align:center;padding: 0 10em 1em 0;"><font color="red">Left Score = 0</font></b>
 <b id="time_val" style="text-align:center;padding: 0 10em 1em 0;">Time left = 300</b>
@@ -299,25 +264,6 @@ var prev_y = 0;
 			Body.setVelocity( car2, {x: 2.5, y: 2.5}); 			
 		}
 
-
-
-
-
-
-		if (joystick.down()) {
-			Body.setVelocity( car2, {x: 0, y: 2.5});  
-		}
-		if (joystick.up()) {
-			Body.setVelocity( car2, {x: 0, y: -2.5});  
-		}		
-		
-		if (joystick.left()) {
-			Body.setVelocity( car2, {x: -2.5, y: 0});
-		}
-		if (joystick.right()) {
-			Body.setVelocity( car2, {x: 2.5, y: 0});
-		}
-		
 
 
 
@@ -573,16 +519,38 @@ Render.run(render);
 	    }	    
         //}
     });
-
-
-
-
-
-
-
-
-  
+ 
   </script>
+
+
+
+        <div id="left"></div>
+        <div id="right"></div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/nipplejs/0.7.3/nipplejs.js"></script>
+        <script>
+            var joystickL = nipplejs.create({
+                zone: document.getElementById('left'),
+                mode: 'static',
+                position: { left: '20%', top: '50%' },
+                color: 'green',
+                size: 200
+            });
+
+            var joystickR = nipplejs.create({
+                zone: document.getElementById('right'),
+                mode: 'static',
+                position: { left: '80%', top: '50%' },
+                color: 'red',
+                size: 200
+            });
+        </script>
+
+
 
 </body>
 </html>
+
+
+
+
+
