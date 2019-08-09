@@ -11,28 +11,41 @@ A two player (1v1) fun physics based soccer game. Player 1 (RED-left) controls t
 <!DOCTYPE html>
 <html>
 <head>
-  <title>soKKer</title>
-  <meta charset="utf-8">
-
-   
-  <script src="https://cdn.jsdelivr.net/npm/matter-js@0.14.2/build/matter.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-<!-- 
-  <script src="lib/matter.min.js"></script>
-  <script src="lib/jquery.min.js"></script>
---> 
 
   <style>
   
-	body {
-	  text-align: center;
-	  margin: 10px;
-	}
+		body {
+		  text-align: center;
+		  margin: 10px;
+		}
 
-	canvas {
-	  margin: 20px auto;
-	}
+		canvas {
+		  margin: 20px auto;
+		}
+
+		#info {
+			position	: absolute;
+			top		: 0px;
+			width		: 100%;
+			padding		: 5px;
+			text-align	: center;
+		}
+		#info a {
+			color		: #66F;
+			text-decoration	: none;
+		}
+		#info a:hover {
+			text-decoration	: underline;
+		}
+		#container {
+			width		: 100%;
+			height		: 100%;
+			overflow	: hidden;
+			padding		: 0;
+			margin		: 0;
+			-webkit-user-select	: none;
+			-moz-user-select	: none;
+		}
 
 
   
@@ -40,8 +53,56 @@ A two player (1v1) fun physics based soccer game. Player 1 (RED-left) controls t
   
 </head>
 
+  <title>soKKer</title>
+  <meta charset="utf-8">
+
+   
+  <script src="https://cdn.jsdelivr.net/npm/matter-js@0.14.2/build/matter.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  		<script src="virtualjoystick.js"></script>
+
+
+<!-- 
+  <script src="lib/matter.min.js"></script>
+  <script src="lib/jquery.min.js"></script>
+--> 
+
+
+
 <body>
 
+
+
+		<div id="info">
+			<span id="result"></span>
+		</div> 
+
+
+		<script>
+			console.log("touchscreen is", VirtualJoystick.touchScreenAvailable() ? "available" : "not available");
+	
+			var joystick	= new VirtualJoystick({
+				container	: document.getElementById('container'),
+				mouseSupport	: true,
+			});
+			joystick.addEventListener('touchStart', function(){
+				console.log('down')
+			})
+			joystick.addEventListener('touchEnd', function(){
+				console.log('up')
+			})
+
+			setInterval(function(){
+				var outputEl	= document.getElementById('result');
+				outputEl.innerHTML	= '<b>Result:</b> '
+					+ ' dx:'+joystick.deltaX()
+					+ ' dy:'+joystick.deltaY()
+					+ (joystick.right()	? ' right'	: '')
+					+ (joystick.up()	? ' up'		: '')
+					+ (joystick.left()	? ' left'	: '')
+					+ (joystick.down()	? ' down' 	: '')	
+			}, 1/30 * 1000);
+		</script>
 
   
 <div id="gameContainer" style="height: 10px; width: 100%;"></div>
@@ -317,8 +378,8 @@ var framesPerSecond = 4;
         
 		if (ball_x > car_x && ball_y > car_y) {
 		
-		console.log('Ball on right down');
-		console.log(car_x + ',' + car_y + ',' + ball_x + ',' + ball_y);
+		//console.log('Ball on right down');
+		//console.log(car_x + ',' + car_y + ',' + ball_x + ',' + ball_y);
 		//console.log(dx + ',' + dy + ',' + fx + ',' + fy);
 		
 		   if(dx >= dy)	        
@@ -333,8 +394,8 @@ var framesPerSecond = 4;
 		
 		if (ball_x > car_x && ball_y < car_y) {
 		
-		console.log('Ball on right up');
-		console.log(car_x + ',' + car_y + ',' + ball_x + ',' + ball_y);
+		//console.log('Ball on right up');
+		//console.log(car_x + ',' + car_y + ',' + ball_x + ',' + ball_y);
 		//console.log(dx + ',' + dy + ',' + fx + ',' + fy);
 			
 		   if(dx >= dy)	        
@@ -349,8 +410,8 @@ var framesPerSecond = 4;
 		        
 		if (ball_x < car_x && ball_y > car_y) {
 		
-		console.log('Ball on left down');
-		console.log(car_x + ',' + car_y + ',' + ball_x + ',' + ball_y);
+		//console.log('Ball on left down');
+		//console.log(car_x + ',' + car_y + ',' + ball_x + ',' + ball_y);
 		//console.log(dx + ',' + dy + ',' + fx + ',' + fy);
 
 		   if(dx >= dy)	        
@@ -379,8 +440,8 @@ var framesPerSecond = 4;
 
 		if (ball_x < car_x && ball_y < car_y) {
 		
-		console.log('Ball on left up');
-		console.log(car_x + ',' + car_y + ',' + ball_x + ',' + ball_y);
+		//console.log('Ball on left up');
+		//console.log(car_x + ',' + car_y + ',' + ball_x + ',' + ball_y);
 		//console.log(dx + ',' + dy + ',' + fx + ',' + fy);
 
 		   if(dx >= dy)	        
