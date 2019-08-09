@@ -11,10 +11,10 @@ A two player (1v1) fun physics based soccer game. Player 1 (RED-left) controls t
 <!DOCTYPE html>
 <html>
 <head>
+
 		<meta charset="utf-8">
 		<meta name="viewport" content="user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		
-
 
   <style>
   
@@ -63,7 +63,7 @@ A two player (1v1) fun physics based soccer game. Player 1 (RED-left) controls t
    
   <script src="https://cdn.jsdelivr.net/npm/matter-js@0.14.2/build/matter.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  		<script src="virtualjoystick.js"></script>
+  <script src="virtualjoystick.js"></script>
 
 
 <!-- 
@@ -76,17 +76,11 @@ A two player (1v1) fun physics based soccer game. Player 1 (RED-left) controls t
 <body>
 
 
-
-		<div id="info">
-			<span id="result"></span>
-		</div> 
-
-
 		<script>
 			console.log("touchscreen is", VirtualJoystick.touchScreenAvailable() ? "available" : "not available");
 	
 			var joystick	= new VirtualJoystick({
-				container	: document.getElementById('container'),
+				container	: document.getElementById('gameContainer'),
 				mouseSupport	: true,
 			});
 			joystick.addEventListener('touchStart', function(){
@@ -96,12 +90,11 @@ A two player (1v1) fun physics based soccer game. Player 1 (RED-left) controls t
 				console.log('up')
 			})
 
-
 		</script>
 
   
 <div id="gameContainer" style="height: 10px; width: 100%;"></div>
-
+<div id="info" style="height: 10px; width: 100%;""><span id="result"></span></div> 
 <b id="left_val" style="text-align:center;padding: 0 10em 1em 0;"><font color="red">Left Score = 0</font></b>
 <b id="time_val" style="text-align:center;padding: 0 10em 1em 0;">Time left = 300</b>
 <b id="right_val" style="text-align:center;padding: 0 2em 1em 0;"><font color="blue">Right Score = 0</font></b>
@@ -141,7 +134,7 @@ var render = Render.create({
   engine: engine,
   options: {
     width: 800,
-    height: 400,
+    height: 600,
     wireframes: false
   }
 });
