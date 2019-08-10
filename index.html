@@ -4,7 +4,7 @@ sokker
 Author : Kuntal Bhusan
 Email : kuntal.bhusan@gmail.com
 
-A two player (1v1) fun physics based soccer game. Player 1 (RED-left) controls the paddle using keyboard buttons W,S,A,D and Player 2 uses the Left,Right,Up and Down keyboard keys. The aim is to manoeuvre the ball and score a goal in the opposite court within the given time. Refresh the page to start a new game.
+A fun physics based soccer game. Player (BLUE) controls the paddle using keyboard buttons Left,Right,Up and Down or the touchscreen vitual joystick. The aim is to manoeuvre the ball and score a goal in the opposite court within the given time. Refresh the page to start a new game.
 
 -->
 
@@ -25,18 +25,22 @@ A two player (1v1) fun physics based soccer game. Player 1 (RED-left) controls t
             left: 0;
             top: 0;
             height: 100%;
-            width: 50%;
+            width: 100%;
             background: rgba(0, 255, 0, 0.1);
         }
 
-        #right {
-            position: absolute;
-            right: 0;
-            top: 0;
-            height: 100%;
-            width: 50%;
-            background: rgba(0, 0, 255, 0.1);
-        }
+        .direction {
+		  display:none;  
+		}
+
+		#info {
+		  background-color: rgba(0, 255, 0, 0.1);
+		  width: 100%;
+		  border: 2px solid green;
+		  padding: 2px;
+		  margin: 2px;
+		}
+
 
   
   </style>
@@ -59,12 +63,13 @@ A two player (1v1) fun physics based soccer game. Player 1 (RED-left) controls t
 
 <body>
 
-  
-<div id="gameContainer" style="height: 50px; width: 100%;"></div>
 
-<b id="left_val" style="text-align:center;padding: 0 10em 1em 0;"><font color="red">Left Score = 0</font></b>
+
+<div id="gameContainer" style="height: 10px; width: 100%;"></div>
+
+<b id="left_val" style="text-align:center;padding: 0 10em 1em 0;"><font color="red">AI Score = 0</font></b>
 <b id="time_val" style="text-align:center;padding: 0 10em 1em 0;">Time left = 300</b>
-<b id="right_val" style="text-align:center;padding: 0 2em 1em 0;"><font color="blue">Right Score = 0</font></b>
+<b id="right_val" style="text-align:center;padding: 0 2em 1em 0;"><font color="blue">Player Score = 0</font></b>
 
 
 
@@ -523,17 +528,17 @@ Render.run(render);
 
 
         <div id="left"></div>
-        <div id="right"></div>
+        <div id="right"></div> 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/nipplejs/0.7.3/nipplejs.js"></script>
         <script>
             var joystickL = nipplejs.create({
                 zone: document.getElementById('left'),
                 mode: 'static',
-                position: { left: '40%', top: '50%' },
-                color: 'green',
+                position: { left: '50%', top: '70%' },
+                color: 'blue',
                 size: 200
             });
-
+/*
             var joystickR = nipplejs.create({
                 zone: document.getElementById('right'),
                 mode: 'static',
@@ -541,6 +546,8 @@ Render.run(render);
                 color: 'red',
                 size: 200
             });
+*/            
+
         </script>
 
 
@@ -550,7 +557,6 @@ Render.run(render);
   <div id="debug">
     <ul>
       <li class="direction">
-        direction :
         <ul>
           <li class="x">x : <span class='data'></span></li>
           <li class="y">y : <span class='data'></span></li>
@@ -700,5 +706,12 @@ function debug(obj) {
 
 </script>
 
+
+<div id="info">
+<p><font face="verdana" color="green"> <b>Sokker</b> is fun physics based game where the aim is to manoeuvre the black ball and score a goal in the RED court within the given time against the AI bot. The Player (BLUE) controls the paddle using either the keyboard buttons Left,Right,Up and Down or the touchscreen vitual joystick. Refresh the page to start a new game.
+</font></p>
+</div>  
+
 </body>
 </html>
+
