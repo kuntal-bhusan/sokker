@@ -497,7 +497,7 @@ Render.run(render);
 			    if(ball.position.x <= 120){
 			    	console.log('LEFT GOAL');
 			    	right_score += 1;
-			    	document.getElementById("right_val").innerHTML = '<font color="blue">' + "Right score = " + right_score + '</font>';
+			    	document.getElementById("right_val").innerHTML = '<font color="blue">' + "Player score = " + right_score + '</font>';
 			    	engine.timing.timeScale = 0.5;
 			    	
 			    	Body.setPosition( ball, {x: 400, y: 200});
