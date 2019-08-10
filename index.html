@@ -75,9 +75,9 @@ A fun physics based soccer game. Player (BLUE) controls the paddle using keyboar
 
 
 <div id="score">
-<b id="left_val" style="text-align:left;padding: 0 5em 1em 0;"><font color="red">AI Score = 0</font></b>
-<b id="time_val" style="text-align:center;padding: 0 5em 1em 0;">Time left = 300</b>
-<b id="right_val" style="text-align:right;padding: 0 5em 1em 0;"><font color="blue">Player Score = 0</font></b>
+<b id="left_val" style="text-align:left;padding: 0 1em 1em 0;"><font color="red">AI Score = 0</font></b>
+<b id="time_val" style="text-align:center;padding: 0 1em 1em 0;">Time left = 300</b>
+<b id="right_val" style="text-align:right;padding: 0 1em 1em 0;"><font color="blue">Player Score = 0</font></b>
 </div>
 
 
@@ -669,35 +669,35 @@ function debug(obj) {
 
 
  		if (sub['y'] == 'down' && sub['angle'] == 'down') {		// down only
-			Body.setVelocity( car2, {x: 0, y: 2.5});  
+			Body.setVelocity( car2, {x: 0, y: 3});  
 		}
 		if (sub['y'] == 'up' && sub['angle'] == 'up') {			// up only
-			Body.setVelocity( car2, {x: 0, y: -2.5});  
+			Body.setVelocity( car2, {x: 0, y: -3});  
 		}		
 		
 		if (sub['y'] == 'left' && sub['angle'] == 'left') {		// left only
-			Body.setVelocity( car2, {x: -2.5, y: 0});
+			Body.setVelocity( car2, {x: -3, y: 0});
 		}
 		if (sub['y'] == 'right' && sub['angle'] == 'right') {	// right only
-			Body.setVelocity( car2, {x: 2.5, y: 0});
+			Body.setVelocity( car2, {x: 3, y: 0});
 		}
 		
 		
 		if (sub['y'] == 'up' && sub['angle'] == 'left') {		// up-left
-			Body.setVelocity( car2, {x: -2.5, y: -2.5}); 
+			Body.setVelocity( car2, {x: -3, y: -3}); 
 		}
 		if (sub['y'] == 'up' && sub['angle'] == 'right') {	// up-right
-			Body.setVelocity( car2, {x: 2.5, y: -2.5}); 			
+			Body.setVelocity( car2, {x: 3, y: -3}); 			
 		}
 		if (sub['y'] == 'up' && sub['angle'] == 'down') {		// up-down
-			Body.setVelocity( car2, {x: 0, y: 2.5}); 			
+			Body.setVelocity( car2, {x: 0, y: 3}); 			
 		}		
   
  		if (sub['y'] == 'down' && sub['angle'] == 'left') {	// down-left
-			Body.setVelocity( car2, {x: -2.5, y: 2.5}); 
+			Body.setVelocity( car2, {x: -3, y: 3}); 
 		}
 		if (sub['y'] == 'down' && sub['angle'] == 'right') {	//down-right
-			Body.setVelocity( car2, {x: 2.5, y: 2.5}); 			
+			Body.setVelocity( car2, {x: 3, y: 3}); 			
 		}
 
        
