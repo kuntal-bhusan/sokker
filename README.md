@@ -1,3 +1,3 @@
 # sokker
 
-Sokker is a two player (1v1) fun physics based soccer game. Player 1 (RED-left) controls the paddle using keyboard buttons W,S,A,D and Player 2 uses the Left,Right,Up and Down keyboard keys. The aim is to manoeuvre the ball and score a goal in the opposite court within the given time. Refresh the page to start a new game.
+<b>Sokker</b> is fun physics based game where the aim is to manoeuvre the black ball and score a goal in the RED court within the given time against the AI bot. The Player (BLUE) controls the paddle using either the keyboard buttons Left,Right,Up and Down or the touchscreen vitual joystick. Refresh the page to start a new game.
